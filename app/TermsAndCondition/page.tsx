@@ -61,7 +61,7 @@ const termsData: TermsData = {
       title: '9. Contact Us',
       content:
         'If you have any questions about these Terms, please contact us at ',
-      email: 'support@yourblog.com',
+      email: ' connect@legendofmarketing.com',
     },
   ],
 };

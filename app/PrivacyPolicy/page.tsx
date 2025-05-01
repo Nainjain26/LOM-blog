@@ -66,7 +66,7 @@ const privacyData: PrivacyData = {
       title: '10. Contact Us',
       content:
         'If you have any questions or concerns about this Privacy Policy, feel free to contact us at ',
-      email: 'privacy@yourblog.com',
+      email: ' connect@legendofmarketing.com',
     },
   ],
 };
