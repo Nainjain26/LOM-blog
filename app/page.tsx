@@ -1,20 +1,39 @@
-import ExpertSpeak from '@/components/ExpertSpeak'
-import FeatureBlog from '@/components/Featuredblog'
-import SearchSection from '@/components/HeroSection'
-import BlogSection from '@/components/Latestblog'
-import MarketingBlog from '@/components/Marketingblog'
-import React from 'react'
+'use client';
+
+import React, { useEffect, useState } from 'react';
+import ExpertSpeak from '@/components/ExpertSpeak';
+import FeatureBlog from '@/components/Featuredblog';
+import SearchSection from '@/components/HeroSection';
+import BlogSection from '@/components/Latestblog';
+import MarketingBlog from '@/components/Marketingblog';
 
 const Home = () => {
+  const [message, setMessage] = useState('Loading...');
+
+  useEffect(() => {
+    fetch('http://localhost:5000/api/hello')
+      .then(res => res.json())
+      .then(data => setMessage(data.message))
+      .catch(err => {
+        console.error("Fetch error:", err);
+        setMessage("Failed to connect to backend");
+      });
+  }, []);
+
   return (
     <div>
-      <SearchSection/>
-      <BlogSection/>
-      <FeatureBlog/>
-      <MarketingBlog/>
-      <ExpertSpeak/>
-    </div>
-  )
-}
+      <SearchSection />
+      <BlogSection />
+      <FeatureBlog />
+      <MarketingBlog />
+      <ExpertSpeak />
 
-export default Home
+      {/* Just for test */}
+      <p style={{ marginTop: '20px', color: 'green' }}>
+        Message from backend: {message}
+      </p>
+    </div>
+  );
+};
+
+export default Home;

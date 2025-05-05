@@ -33,6 +33,8 @@ const sideMenuLinks: MenuLink[] = [
   { name: "Contact Us", href: "/Contact" },
   { name: "Privacy Policy", href: "/PrivacyPolicy" },
   { name: "Terms & Conditions", href: "/TermsAndCondition" },
+  { name: "Login", href: "/Login" },
+  { name: "Register", href: "/Register" },
 ];
 
 const socialLinks: SocialLink[] = [
