@@ -19,7 +19,7 @@ export default function DashboardPage() {
       }
 
       try {
-        const res = await fetch("http://localhost:5000/dashboard", {
+        const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/dashboard`, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
