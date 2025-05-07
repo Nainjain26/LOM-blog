@@ -27,13 +27,14 @@ const Login = () => {
     try {
       const res = await axios.post(`${process.env.NEXT_PUBLIC_API_BASE_URL}/api/auth/login`, form);
       localStorage.setItem('token', res.data.token);
-      setMessage({text: 'Login successful! Redirecting...', type: 'success'});
+      setMessage({ text: 'Login successful! Redirecting...', type: 'success' });
       setTimeout(() => router.push('/dashboard'), 1500);
     } catch (error) {
-      setMessage({text: 'Login failed. Check your credentials.', type: 'error'});
+      console.error("Error during login:", error);
+      setMessage({ text: 'Login failed. Check your credentials.', type: 'error' });
     } finally {
       setIsLoading(false);
-    }
+    }    
   };
 
   return (
