@@ -61,7 +61,7 @@ const Login = () => {
             animate={{ y: 0, opacity: 1 }}
             transition={{ delay: 0.4 }}
           >
-            Sign in to access your dashboard and continue your journey.
+            Sign in to access your dashboard and create blogs.
           </motion.p>
         </div>
       </motion.div>
