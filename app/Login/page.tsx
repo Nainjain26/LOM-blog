@@ -154,7 +154,7 @@ const Login = () => {
             </motion.div>
           )}
 
-          <div className="mt-6 text-center">
+          {/* <div className="mt-6 text-center">
             <p className="text-gray-600">
               Don't have an account?{' '}
               <button 
@@ -165,7 +165,7 @@ const Login = () => {
                 Create one
               </button>
             </p>
-          </div>
+          </div> */}
         </form>
       </motion.div>
     </div>

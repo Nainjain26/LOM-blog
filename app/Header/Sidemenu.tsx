@@ -34,7 +34,7 @@ const sideMenuLinks: MenuLink[] = [
   { name: "Privacy Policy", href: "/PrivacyPolicy" },
   { name: "Terms & Conditions", href: "/TermsAndCondition" },
   { name: "Login", href: "/Login" },
-  { name: "Register", href: "/Register" },
+  // { name: "Register", href: "/Register" },
 ];
 
 const socialLinks: SocialLink[] = [
