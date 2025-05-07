@@ -1,6 +1,56 @@
-import { BlogEditor } from "@/components/blog-editor"
+"use client";
+
+import { useEffect, useState } from "react";
+import { useRouter } from "next/navigation";
+import { BlogEditor } from "@/components/blog-editor";
 
 export default function DashboardPage() {
+  const router = useRouter();
+  const [loading, setLoading] = useState(true);
+  const [admin, setAdmin] = useState(false);
+
+  useEffect(() => {
+    const checkAdmin = async () => {
+      const token = localStorage.getItem("token");
+
+      if (!token) {
+        router.push("/");
+        return;
+      }
+
+      try {
+        const res = await fetch("http://localhost:5000/dashboard", {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+
+        if (!res.ok) {
+          router.push("/");
+          return;
+        }
+
+        const data = await res.json();
+        if (data?.user?.role !== "admin") {
+          router.push("/");
+        } else {
+          setAdmin(true);
+        }
+      } catch (error) {
+        console.error("Token check failed", error);
+        router.push("/");
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    checkAdmin();
+  }, [router]);
+
+  if (loading) return <p>Loading...</p>;
+
+  if (!admin) return null;
+
   return (
     <div className="p-6">
       <div className="mb-8">
@@ -9,5 +59,5 @@ export default function DashboardPage() {
       </div>
       <BlogEditor />
     </div>
-  )
+  );
 }

@@ -8,21 +8,22 @@ import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, For
 import { Input } from "@/components/ui/input"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
 import { Textarea } from "@/components/ui/textarea"
-// import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { useForm } from "react-hook-form"
 import { z } from "zod"
 import { Plus, Trash2, X } from "lucide-react"
 import { Badge } from "@/components/ui/badge"
-import Link from "next/link"
 
-// const categories = [
-//   { id: "1", name: "Technology" },
-//   { id: "2", name: "Marketing" },
-//   { id: "3", name: "Design" },
-//   { id: "4", name: "Development" },
-//   { id: "5", name: "Business" },
-// ]
+// Define categories array
+const categories = [
+  { id: "1", name: "Technology" },
+  { id: "2", name: "Marketing" },
+  { id: "3", name: "Design" },
+  { id: "4", name: "Development" },
+  { id: "5", name: "Business" },
+  
+]
 
 // Define a type for title-description pairs
 interface TitleDescription {
@@ -127,7 +128,7 @@ export function BlogEditor() {
   return (
     <div className="grid gap-6">
       <Tabs defaultValue="edit" className="w-full">
-        <TabsList className="grid w-full grid-cols-2 bg-black">
+        <TabsList className="grid w-full grid-cols-2 ">
           <TabsTrigger value="edit" className="data-[state=active]:bg-yellow-500 data-[state=active]:text-black">
             Edit Post
           </TabsTrigger>
@@ -137,7 +138,7 @@ export function BlogEditor() {
         </TabsList>
         <TabsContent value="edit">
           <Card className="border-2 border-yellow-500 shadow-lg">
-            <CardHeader className="bg-black text-yellow-500 p-4 border-b-2 border-yellow-500">
+            <CardHeader className=" text-yellow-500 p-4 border-b-2 border-yellow-500">
               <CardTitle>Blog Editor</CardTitle>
             </CardHeader>
             <CardContent className="pt-6 bg-white">
@@ -155,7 +156,7 @@ export function BlogEditor() {
                               <Input 
                                 placeholder="Enter main blog title" 
                                 {...field} 
-                                className="border-2 border-black focus:border-yellow-500 focus-visible:ring-yellow-500"
+                                className="border-2 border-gray-400  "
                               />
                             </FormControl>
                             <FormMessage className="text-red-500" />
@@ -173,7 +174,7 @@ export function BlogEditor() {
                               <Input
                                 placeholder="Enter author name"
                                 {...field}
-                                className="border-2 border-black focus:border-yellow-500"
+                                className="border-2 border-gray-400 "
                               />
                             </FormControl>
                             <FormMessage className="text-red-500" />
@@ -192,7 +193,7 @@ export function BlogEditor() {
                             variant="outline"
                             size="sm"
                             onClick={addTitleDescription}
-                            className="h-8 gap-1 border-black text-black hover:bg-yellow-500 hover:text-black"
+                            className="h-8 gap-1 border-gray-400 text-black hover:bg-yellow-500 hover:text-black"
                           >
                             <Plus className="h-3.5 w-3.5" />
                             <span>Add</span>
@@ -200,7 +201,7 @@ export function BlogEditor() {
                         </div>
 
                         {titleDescriptions.map((item) => (
-                          <div key={item.id} className="space-y-3 p-3 border-2 border-black rounded-md relative bg-white">
+                          <div key={item.id} className="space-y-3 p-3 border-2 border-gray-400 rounded-md relative bg-white">
                             <Button
                               type="button"
                               variant="ghost"
@@ -218,7 +219,7 @@ export function BlogEditor() {
                                 placeholder="Enter title"
                                 value={item.title}
                                 onChange={(e) => updateTitleDescription(item.id, "title", e.target.value)}
-                                className="border-2 border-black focus:border-yellow-500"
+                                className="border-2 border-gray-400 "
                               />
                             </div>
 
@@ -230,7 +231,7 @@ export function BlogEditor() {
                                 placeholder="Enter description"
                                 value={item.description}
                                 onChange={(e) => updateTitleDescription(item.id, "description", e.target.value)}
-                                className="resize-none border-2 border-black focus:border-yellow-500"
+                                className="resize-none border-2 border-gray-400 "
                               />
                             </div>
                           </div>
@@ -245,7 +246,7 @@ export function BlogEditor() {
                             <FormControl>
                               <Textarea
                                 placeholder="Write your blog content here..."
-                                className="min-h-[200px] border-2 border-black focus:border-yellow-500"
+                                className="min-h-[200px] border-2 border-gray-400 "
                                 {...field}
                               />
                             </FormControl>
@@ -259,33 +260,20 @@ export function BlogEditor() {
                         render={({ field }) => (
                           <FormItem>
                             <FormLabel className="text-black font-semibold">Category</FormLabel>
-                            <div className="flex items-center gap-4">
-                              {field.value ? (
-                                <Badge className="bg-yellow-500 text-black px-4 py-2 text-sm font-medium">
-                                  {field.value}
-                                  <Button
-                                    type="button"
-                                    variant="ghost"
-                                    size="icon"
-                                    onClick={() => field.onChange("")}
-                                    className="h-4 w-4 ml-2 text-black hover:text-red-500 hover:bg-transparent"
-                                  >
-                                    <Trash2 className="h-3 w-3" />
-                                  </Button>
-                                </Badge>
-                              ) : (
-                                <span className="text-gray-500">No category selected</span>
-                              )}
-                              <Link href="/categories" passHref>
-                                <Button
-                                  type="button"
-                                  variant="outline"
-                                  className="border-black text-black hover:bg-yellow-500 hover:text-black"
-                                >
-                                  {field.value ? "Change Category" : "Select Category"}
-                                </Button>
-                              </Link>
-                            </div>
+                            <Select onValueChange={field.onChange} defaultValue={field.value}>
+                              <FormControl>
+                                <SelectTrigger className="border-2 border-gray-400">
+                                  <SelectValue placeholder="Select a category" />
+                                </SelectTrigger>
+                              </FormControl>
+                              <SelectContent>
+                                {categories.map((category) => (
+                                  <SelectItem key={category.id} value={category.name}>
+                                    {category.name}
+                                  </SelectItem>
+                                ))}
+                              </SelectContent>
+                            </Select>
                             <FormMessage className="text-red-500" />
                           </FormItem>
                         )}
@@ -319,7 +307,7 @@ export function BlogEditor() {
                               }
                               fileInput.click()
                             }}
-                            className="h-8 gap-1 border-black text-black hover:bg-yellow-500 hover:text-black"
+                            className="h-8 gap-1 border-gray-400 text-black hover:bg-yellow-500 hover:text-black"
                           >
                             <Plus className="h-3.5 w-3.5" />
                             <span>Add Image</span>
@@ -328,7 +316,7 @@ export function BlogEditor() {
 
                         <div className="grid gap-4 grid-cols-1 sm:grid-cols-2">
                           {images.map((image) => (
-                            <div key={image.id} className="relative border-2 border-black rounded-md overflow-hidden group">
+                            <div key={image.id} className="relative border-2 border-gray-400 rounded-md overflow-hidden group">
                               <img
                                 src={image.url || "/placeholder.svg"}
                                 alt="Blog image"
@@ -348,14 +336,14 @@ export function BlogEditor() {
 
                           {images.length === 0 && (
                             <div className="col-span-full">
-                             <div className="border-2 border-dashed border-black hover:border-yellow-500">
-  <ImageUploader
-    image={null}
-    setImage={(url) => {
-      if (url) addImage(url)
-    }}
-  />
-</div>
+                             <div className="border-2 border-dashed border-gray-400 hover:border-yellow-500">
+                                <ImageUploader
+                                  image={null}
+                                  setImage={(url) => {
+                                    if (url) addImage(url)
+                                  }}
+                                />
+                              </div>
                             </div>
                           )}
                         </div>
@@ -372,7 +360,7 @@ export function BlogEditor() {
                                 <Input 
                                   placeholder="Enter SEO meta title" 
                                   {...field} 
-                                  className="border-2 border-black focus:border-yellow-500"
+                                  className="border-2 border-gray-400 "
                                 />
                               </FormControl>
                               <FormDescription className="text-gray-600">
@@ -392,7 +380,7 @@ export function BlogEditor() {
                               <FormControl>
                                 <Textarea 
                                   placeholder="Enter SEO meta description" 
-                                  className="resize-none border-2 border-black focus:border-yellow-500" 
+                                  className="resize-none border-2 border-gray-400 " 
                                   {...field} 
                                 />
                               </FormControl>
@@ -438,13 +426,13 @@ export function BlogEditor() {
                                     addTag()
                                   }
                                 }}
-                                className="border-2 border-black focus:border-yellow-500"
+                                className="border-2 border-gray-400 "
                               />
                               <Button
                                 type="button"
                                 variant="outline"
                                 onClick={addTag}
-                                className="border-black text-black hover:bg-yellow-500 hover:text-black"
+                                className="border-gray-400 text-black hover:bg-yellow-500 hover:text-black"
                                 disabled={!currentTag.trim()}
                               >
                                 <Plus className="h-4 w-4" />
@@ -462,7 +450,7 @@ export function BlogEditor() {
                   <div className="flex justify-end gap-2">
                     <Button 
                       variant="outline" 
-                      className="border-black text-black hover:bg-yellow-500 hover:text-black"
+                      className="border-gray-400 text-black hover:bg-yellow-500 hover:text-black"
                     >
                       Save Draft
                     </Button>
@@ -481,7 +469,7 @@ export function BlogEditor() {
 
         <TabsContent value="preview">
           <Card className="border-2 border-yellow-500 shadow-lg">
-            <CardHeader className="bg-black text-yellow-500 p-4 border-b-2 border-yellow-500">
+            <CardHeader className=" text-yellow-500 p-4 border-b-2 border-yellow-500">
               <CardTitle>Blog Preview</CardTitle>
             </CardHeader>
             <CardContent className="pt-6 bg-white">
@@ -495,7 +483,7 @@ export function BlogEditor() {
                     <img
                       src={images[0].url || "/placeholder.svg"}
                       alt={form.watch("mainTitle") || "Blog image"}
-                      className="rounded-lg max-h-[400px] w-auto object-cover border-2 border-black"
+                      className="rounded-lg max-h-[400px] w-auto object-cover border-2 border-gray-400"
                     />
                   </div>
                 )}
@@ -548,7 +536,7 @@ export function BlogEditor() {
                           key={image.id}
                           src={image.url || "/placeholder.svg"}
                           alt="Additional blog image"
-                          className="rounded-lg w-full h-auto object-cover border-2 border-black"
+                          className="rounded-lg w-full h-auto object-cover border-2 border-gray-400"
                         />
                       ))}
                     </div>

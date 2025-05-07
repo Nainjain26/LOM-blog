@@ -20,29 +20,10 @@ const sidebarLinks = [
   },
   {
     title: "Categories",
-    href: "/dashboard/categories",
+    href: "/categories",
     icon: FolderOpen,
   },
-  {
-    title: "Media",
-    href: "/dashboard/media",
-    icon: ImageIcon,
-  },
-  {
-    title: "Analytics",
-    href: "/dashboard/analytics",
-    icon: BarChart3,
-  },
-  {
-    title: "Users",
-    href: "/dashboard/users",
-    icon: Users,
-  },
-  {
-    title: "Settings",
-    href: "/dashboard/settings",
-    icon: Settings,
-  },
+  
 ]
 
 export function DashboardSidebar() {
