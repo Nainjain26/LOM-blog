@@ -99,7 +99,7 @@ const Login = () => {
                 type="email"
                 name="email"
                 placeholder="Email Address"
-                autoComplete="email"
+                // autoComplete="email"
                 onChange={handleChange}
                 required
                 className="w-full pl-10 p-3 border-2 border-black rounded-lg focus:border-yellow-500 focus:ring-2 focus:ring-yellow-200 transition-all"
