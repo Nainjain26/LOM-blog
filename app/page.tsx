@@ -11,7 +11,7 @@ const Home = () => {
   const [message, setMessage] = useState("Loading...");
 
   useEffect(() => {
-    fetch("http://localhost:5000/api/blog")
+    fetch("https://new-blogbackend.onrender.com/api/blog")
       .then((res) => res.json())
       .then((data) => setMessage("connected"))
       .catch((err) => {

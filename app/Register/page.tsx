@@ -26,7 +26,7 @@ const Register = () => {
     e.preventDefault();
     setIsLoading(true);
     try {
-      await axios.post('http://localhost:5000/api/auth/register', form);
+      await axios.post('https://new-blogbackend.onrender.com/api/auth/register', form);
       setMessage({text: 'Registration successful! Redirecting...', type: 'success'});
       setTimeout(() => router.push('/login'), 1500);
     } catch (error) {
