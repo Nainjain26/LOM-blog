@@ -19,11 +19,14 @@ export default function DashboardPage() {
       }
 
       try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_API_BASE_URL}/dashboard`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
+        const res = await fetch(
+          `${process.env.NEXT_PUBLIC_API_BASE_URL}/api/dashboard`,
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        );
 
         if (!res.ok) {
           router.push("/");
@@ -55,7 +58,9 @@ export default function DashboardPage() {
     <div className="p-6">
       <div className="mb-8">
         <h1 className="text-3xl font-bold tracking-tight">Blog Dashboard</h1>
-        <p className="text-muted-foreground">Manage your blog posts, categories, and media.</p>
+        <p className="text-muted-foreground">
+          Manage your blog posts, categories, and media.
+        </p>
       </div>
       <BlogEditor />
     </div>

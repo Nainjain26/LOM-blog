@@ -1,19 +1,33 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { ImageUploader } from "@/components/image-uploader"
-import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card"
-import { Form, FormControl, FormDescription, FormField, FormItem, FormLabel, FormMessage } from "@/components/ui/form"
-import { Input } from "@/components/ui/input"
-import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Textarea } from "@/components/ui/textarea"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { zodResolver } from "@hookform/resolvers/zod"
-import { useForm } from "react-hook-form"
-import { z } from "zod"
-import { Plus, Trash2, X } from "lucide-react"
-import { Badge } from "@/components/ui/badge"
+import { useState } from "react";
+import { ImageUploader } from "@/components/image-uploader";
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Form,
+  FormControl,
+  FormDescription,
+  FormField,
+  FormItem,
+  FormLabel,
+  FormMessage,
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useForm } from "react-hook-form";
+import { z } from "zod";
+import { Plus, Trash2, X } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 
 // Define categories array
 const categories = [
@@ -22,20 +36,19 @@ const categories = [
   { id: "3", name: "Design" },
   { id: "4", name: "Development" },
   { id: "5", name: "Business" },
-  
-]
+];
 
 // Define a type for title-description pairs
 interface TitleDescription {
-  id: string
-  title: string
-  description: string
+  id: string;
+  title: string;
+  description: string;
 }
 
 // Define a type for images
 interface BlogImage {
-  id: string
-  url: string
+  id: string;
+  url: string;
 }
 
 const formSchema = z.object({
@@ -57,13 +70,15 @@ const formSchema = z.object({
   content: z.string().min(20, {
     message: "Content must be at least 20 characters.",
   }),
-})
+});
 
 export function BlogEditor() {
-  const [titleDescriptions, setTitleDescriptions] = useState<TitleDescription[]>([])
-  const [images, setImages] = useState<BlogImage[]>([])
-  const [tags, setTags] = useState<string[]>([])
-  const [currentTag, setCurrentTag] = useState("")
+  const [titleDescriptions, setTitleDescriptions] = useState<
+    TitleDescription[]
+  >([]);
+  const [images, setImages] = useState<BlogImage[]>([]);
+  const [tags, setTags] = useState<string[]>([]);
+  const [currentTag, setCurrentTag] = useState("");
 
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
@@ -75,45 +90,56 @@ export function BlogEditor() {
       author: "",
       content: "",
     },
-  })
+  });
 
   // Add a new title-description pair
   const addTitleDescription = () => {
-    setTitleDescriptions([...titleDescriptions, { id: `td-${Date.now()}`, title: "", description: "" }])
-  }
+    setTitleDescriptions([
+      ...titleDescriptions,
+      { id: `td-${Date.now()}`, title: "", description: "" },
+    ]);
+  };
 
   // Remove a title-description pair
   const removeTitleDescription = (id: string) => {
-    setTitleDescriptions(titleDescriptions.filter((item) => item.id !== id))
-  }
+    setTitleDescriptions(titleDescriptions.filter((item) => item.id !== id));
+  };
 
   // Update a title-description pair
-  const updateTitleDescription = (id: string, field: "title" | "description", value: string) => {
-    setTitleDescriptions(titleDescriptions.map((item) => (item.id === id ? { ...item, [field]: value } : item)))
-  }
+  const updateTitleDescription = (
+    id: string,
+    field: "title" | "description",
+    value: string
+  ) => {
+    setTitleDescriptions(
+      titleDescriptions.map((item) =>
+        item.id === id ? { ...item, [field]: value } : item
+      )
+    );
+  };
 
   // Add a new image
   const addImage = (imageUrl: string) => {
-    setImages([...images, { id: `img-${Date.now()}`, url: imageUrl }])
-  }
+    setImages([...images, { id: `img-${Date.now()}`, url: imageUrl }]);
+  };
 
   // Remove an image
   const removeImage = (id: string) => {
-    setImages(images.filter((image) => image.id !== id))
-  }
+    setImages(images.filter((image) => image.id !== id));
+  };
 
   // Add a new tag
   const addTag = () => {
     if (currentTag.trim() && !tags.includes(currentTag.trim())) {
-      setTags([...tags, currentTag.trim()])
-      setCurrentTag("")
+      setTags([...tags, currentTag.trim()]);
+      setCurrentTag("");
     }
-  }
+  };
 
   // Remove a tag
   const removeTag = (tagToRemove: string) => {
-    setTags(tags.filter((tag) => tag !== tagToRemove))
-  }
+    setTags(tags.filter((tag) => tag !== tagToRemove));
+  };
 
   function onSubmit(values: z.infer<typeof formSchema>) {
     console.log({
@@ -121,7 +147,7 @@ export function BlogEditor() {
       additionalTitlesDescriptions: titleDescriptions,
       images: images,
       tags: tags,
-    })
+    });
     // Here you would typically save the blog post
   }
 
@@ -129,10 +155,16 @@ export function BlogEditor() {
     <div className="grid gap-6">
       <Tabs defaultValue="edit" className="w-full">
         <TabsList className="grid w-full grid-cols-2 ">
-          <TabsTrigger value="edit" className="data-[state=active]:bg-yellow-500 data-[state=active]:text-black">
+          <TabsTrigger
+            value="edit"
+            className="data-[state=active]:bg-yellow-500 data-[state=active]:text-black"
+          >
             Edit Post
           </TabsTrigger>
-          <TabsTrigger value="preview" className="data-[state=active]:bg-yellow-500 data-[state=active]:text-black">
+          <TabsTrigger
+            value="preview"
+            className="data-[state=active]:bg-yellow-500 data-[state=active]:text-black"
+          >
             Preview
           </TabsTrigger>
         </TabsList>
@@ -143,7 +175,10 @@ export function BlogEditor() {
             </CardHeader>
             <CardContent className="pt-6 bg-white">
               <Form {...form}>
-                <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
+                <form
+                  onSubmit={form.handleSubmit(onSubmit)}
+                  className="space-y-8"
+                >
                   <div className="grid gap-6 md:grid-cols-2">
                     <div className="space-y-6">
                       <FormField
@@ -151,11 +186,13 @@ export function BlogEditor() {
                         name="mainTitle"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel className="text-black font-semibold">Main Blog Title</FormLabel>
+                            <FormLabel className="text-black font-semibold">
+                              Main Blog Title
+                            </FormLabel>
                             <FormControl>
-                              <Input 
-                                placeholder="Enter main blog title" 
-                                {...field} 
+                              <Input
+                                placeholder="Enter main blog title"
+                                {...field}
                                 className="border-2 border-gray-400  "
                               />
                             </FormControl>
@@ -169,7 +206,9 @@ export function BlogEditor() {
                         name="author"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel className="text-black font-semibold">Author Name</FormLabel>
+                            <FormLabel className="text-black font-semibold">
+                              Author Name
+                            </FormLabel>
                             <FormControl>
                               <Input
                                 placeholder="Enter author name"
@@ -201,7 +240,10 @@ export function BlogEditor() {
                         </div>
 
                         {titleDescriptions.map((item) => (
-                          <div key={item.id} className="space-y-3 p-3 border-2 border-gray-400 rounded-md relative bg-white">
+                          <div
+                            key={item.id}
+                            className="space-y-3 p-3 border-2 border-gray-400 rounded-md relative bg-white"
+                          >
                             <Button
                               type="button"
                               variant="ghost"
@@ -214,11 +256,19 @@ export function BlogEditor() {
                             </Button>
 
                             <div>
-                              <label className="text-sm font-semibold leading-none block mb-2 text-black">Title</label>
+                              <label className="text-sm font-semibold leading-none block mb-2 text-black">
+                                Title
+                              </label>
                               <Input
                                 placeholder="Enter title"
                                 value={item.title}
-                                onChange={(e) => updateTitleDescription(item.id, "title", e.target.value)}
+                                onChange={(e) =>
+                                  updateTitleDescription(
+                                    item.id,
+                                    "title",
+                                    e.target.value
+                                  )
+                                }
                                 className="border-2 border-gray-400 "
                               />
                             </div>
@@ -230,7 +280,13 @@ export function BlogEditor() {
                               <Textarea
                                 placeholder="Enter description"
                                 value={item.description}
-                                onChange={(e) => updateTitleDescription(item.id, "description", e.target.value)}
+                                onChange={(e) =>
+                                  updateTitleDescription(
+                                    item.id,
+                                    "description",
+                                    e.target.value
+                                  )
+                                }
                                 className="resize-none border-2 border-gray-400 "
                               />
                             </div>
@@ -242,7 +298,9 @@ export function BlogEditor() {
                         name="content"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel className="text-black font-semibold">Content</FormLabel>
+                            <FormLabel className="text-black font-semibold">
+                              Content
+                            </FormLabel>
                             <FormControl>
                               <Textarea
                                 placeholder="Write your blog content here..."
@@ -259,8 +317,13 @@ export function BlogEditor() {
                         name="category"
                         render={({ field }) => (
                           <FormItem>
-                            <FormLabel className="text-black font-semibold">Category</FormLabel>
-                            <Select onValueChange={field.onChange} defaultValue={field.value}>
+                            <FormLabel className="text-black font-semibold">
+                              Category
+                            </FormLabel>
+                            <Select
+                              onValueChange={field.onChange}
+                              defaultValue={field.value}
+                            >
                               <FormControl>
                                 <SelectTrigger className="border-2 border-gray-400">
                                   <SelectValue placeholder="Select a category" />
@@ -268,7 +331,10 @@ export function BlogEditor() {
                               </FormControl>
                               <SelectContent>
                                 {categories.map((category) => (
-                                  <SelectItem key={category.id} value={category.name}>
+                                  <SelectItem
+                                    key={category.id}
+                                    value={category.name}
+                                  >
                                     {category.name}
                                   </SelectItem>
                                 ))}
@@ -284,28 +350,31 @@ export function BlogEditor() {
                       {/* Multiple Images Section */}
                       <div className="space-y-4">
                         <div className="flex items-center justify-between">
-                          <label className="text-sm font-semibold leading-none text-black">Blog Images</label>
+                          <label className="text-sm font-semibold leading-none text-black">
+                            Blog Images
+                          </label>
                           <Button
                             type="button"
                             variant="outline"
                             size="sm"
                             onClick={() => {
-                              const fileInput = document.createElement("input")
-                              fileInput.type = "file"
-                              fileInput.accept = "image/*"
+                              const fileInput = document.createElement("input");
+                              fileInput.type = "file";
+                              fileInput.accept = "image/*";
                               fileInput.onchange = (e) => {
-                                const file = (e.target as HTMLInputElement).files?.[0]
+                                const file = (e.target as HTMLInputElement)
+                                  .files?.[0];
                                 if (file) {
-                                  const reader = new FileReader()
+                                  const reader = new FileReader();
                                   reader.onload = (event) => {
                                     if (event.target?.result) {
-                                      addImage(event.target.result as string)
+                                      addImage(event.target.result as string);
                                     }
-                                  }
-                                  reader.readAsDataURL(file)
+                                  };
+                                  reader.readAsDataURL(file);
                                 }
-                              }
-                              fileInput.click()
+                              };
+                              fileInput.click();
                             }}
                             className="h-8 gap-1 border-gray-400 text-black hover:bg-yellow-500 hover:text-black"
                           >
@@ -316,7 +385,10 @@ export function BlogEditor() {
 
                         <div className="grid gap-4 grid-cols-1 sm:grid-cols-2">
                           {images.map((image) => (
-                            <div key={image.id} className="relative border-2 border-gray-400 rounded-md overflow-hidden group">
+                            <div
+                              key={image.id}
+                              className="relative border-2 border-gray-400 rounded-md overflow-hidden group"
+                            >
                               <img
                                 src={image.url || "/placeholder.svg"}
                                 alt="Blog image"
@@ -336,11 +408,11 @@ export function BlogEditor() {
 
                           {images.length === 0 && (
                             <div className="col-span-full">
-                             <div className="border-2 border-dashed border-gray-400 hover:border-yellow-500">
+                              <div className="border-2 border-dashed border-gray-400 hover:border-yellow-500">
                                 <ImageUploader
                                   image={null}
                                   setImage={(url) => {
-                                    if (url) addImage(url)
+                                    if (url) addImage(url);
                                   }}
                                 />
                               </div>
@@ -355,11 +427,13 @@ export function BlogEditor() {
                           name="metaTitle"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel className="text-black font-semibold">Meta Title</FormLabel>
+                              <FormLabel className="text-black font-semibold">
+                                Meta Title
+                              </FormLabel>
                               <FormControl>
-                                <Input 
-                                  placeholder="Enter SEO meta title" 
-                                  {...field} 
+                                <Input
+                                  placeholder="Enter SEO meta title"
+                                  {...field}
                                   className="border-2 border-gray-400 "
                                 />
                               </FormControl>
@@ -376,12 +450,14 @@ export function BlogEditor() {
                           name="metaDescription"
                           render={({ field }) => (
                             <FormItem>
-                              <FormLabel className="text-black font-semibold">Meta Description</FormLabel>
+                              <FormLabel className="text-black font-semibold">
+                                Meta Description
+                              </FormLabel>
                               <FormControl>
-                                <Textarea 
-                                  placeholder="Enter SEO meta description" 
-                                  className="resize-none border-2 border-gray-400 " 
-                                  {...field} 
+                                <Textarea
+                                  placeholder="Enter SEO meta description"
+                                  className="resize-none border-2 border-gray-400 "
+                                  {...field}
                                 />
                               </FormControl>
                               <FormDescription className="text-gray-600">
@@ -394,7 +470,9 @@ export function BlogEditor() {
 
                         {/* Meta Tags Section */}
                         <FormItem className="mt-4">
-                          <FormLabel className="text-black font-semibold">Meta Tags</FormLabel>
+                          <FormLabel className="text-black font-semibold">
+                            Meta Tags
+                          </FormLabel>
                           <div className="space-y-2">
                             <div className="flex flex-wrap gap-2 mb-2">
                               {tags.map((tag) => (
@@ -422,8 +500,8 @@ export function BlogEditor() {
                                 onChange={(e) => setCurrentTag(e.target.value)}
                                 onKeyDown={(e) => {
                                   if (e.key === "Enter") {
-                                    e.preventDefault()
-                                    addTag()
+                                    e.preventDefault();
+                                    addTag();
                                   }
                                 }}
                                 className="border-2 border-gray-400 "
@@ -440,7 +518,8 @@ export function BlogEditor() {
                             </div>
                           </div>
                           <FormDescription className="text-gray-600">
-                            Add relevant tags to help with SEO (e.g., "web-development", "design-tips")
+                            Add relevant tags to help with SEO (e.g.,
+                            "web-development", "design-tips")
                           </FormDescription>
                         </FormItem>
                       </div>
@@ -448,14 +527,14 @@ export function BlogEditor() {
                   </div>
 
                   <div className="flex justify-end gap-2">
-                    <Button 
-                      variant="outline" 
+                    <Button
+                      variant="outline"
                       className="border-gray-400 text-black hover:bg-yellow-500 hover:text-black"
                     >
                       Save Draft
                     </Button>
-                    <Button 
-                      type="submit" 
+                    <Button
+                      type="submit"
                       className="bg-black text-yellow-500 hover:bg-yellow-500 hover:text-black"
                     >
                       Publish
@@ -508,7 +587,8 @@ export function BlogEditor() {
                 )}
 
                 <div className="text-gray-800 leading-relaxed">
-                  {form.watch("content") || "Your blog content will appear here..."}
+                  {form.watch("content") ||
+                    "Your blog content will appear here..."}
                 </div>
 
                 {titleDescriptions.length > 0 && (
@@ -518,8 +598,12 @@ export function BlogEditor() {
                     </h2>
                     {titleDescriptions.map((item) => (
                       <div key={item.id} className="space-y-2">
-                        <h3 className="text-xl font-semibold text-black">{item.title || "Section Title"}</h3>
-                        <p className="text-gray-700">{item.description || "Section description..."}</p>
+                        <h3 className="text-xl font-semibold text-black">
+                          {item.title || "Section Title"}
+                        </h3>
+                        <p className="text-gray-700">
+                          {item.description || "Section description..."}
+                        </p>
                       </div>
                     ))}
                   </div>
@@ -548,5 +632,5 @@ export function BlogEditor() {
         </TabsContent>
       </Tabs>
     </div>
-  )
+  );
 }
